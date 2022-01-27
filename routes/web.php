@@ -17,7 +17,7 @@ use GuzzleHttp\Client;
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return view('greeting', ['info' => $router->app->version()]);
 });
 
 $router->get('/v1/consult/{nickname}/{platform}', function ($nickname, $platform) use ($router) {
