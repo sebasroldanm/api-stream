@@ -20,46 +20,6 @@ $router->get('/', function () use ($router) {
     return view('greeting', ['info' => $router->app->version()]);
 });
 
-$router->get('/v1/consult/{nickname}/{platform}', function ($nickname, $platform) use ($router) {
-    switch ($platform) {
-        case 'str':
-            $url = 'https://stripchat.com/api/front/v2/models/username/'.$nickname.'/cam';
-            $platform = 'STR';
-            try {
-                $client = new \GuzzleHttp\Client();
-                $response = $client->get($url);
-                $json = json_decode($response->getBody()->getContents());
-                if (empty($json->cam)) {
-                    return response()->json();
-                }
-            } catch (\Throwable $th) {
-                return response()->json();
-            }
-            break;
-        case 'cht':
-            $url = 'https://chaturbate.com/api/chatvideocontext/'.$nickname;
-            $platform = 'CHT';
-            try {
-                $client = new \GuzzleHttp\Client();
-                $response = $client->get($url);
-                $json = json_decode($response->getBody()->getContents());
-                if (!isset($json->hls_source) || empty($json->hls_source)) {
-                    return response()->json();
-                }
-            } catch (\Throwable $th) {
-                return response()->json();
-            }
-            break;
-        default:
-            return response()->json();
-            break;
-    }
-    // // DB::table('api_log')->insert([
-    // //     'nickname'  => $nickname,
-    // //     'plataform' => $platform,
-    // //     'origin'    => 'Consult',
-    // //     'created_at' => Carbon::now(),
-    // //     'updated_at' => Carbon::now(),
-    // // ]);
-    return response()->json($json);
+$router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');
 });
