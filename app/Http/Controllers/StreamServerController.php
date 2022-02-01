@@ -34,6 +34,9 @@ class StreamServerController extends Controller
                     $data_hls = collect($json->cam->viewServers);
                     $hls = $data_hls->sortKeys()['flashphoner-hls'];
                     $streamName = $json->cam->streamName;
+                    if (empty($streamName)) {
+                        return response()->json();
+                    }
                     $url_stream = 'https://b-'.$hls.'.strpst.com/hls/'.$streamName.'/'.$streamName.'.m3u8';
                 } catch (\Throwable $th) {
                     return response()->json();
