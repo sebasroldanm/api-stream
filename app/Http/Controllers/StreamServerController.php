@@ -18,7 +18,7 @@ class StreamServerController extends Controller
         //
     }
 
-    public function consultData(Request $request, $nickname, $platform)
+    public function consultData($nickname, $platform)
     {
         switch ($platform) {
             case 'str':
@@ -73,5 +73,15 @@ class StreamServerController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         return response()->json($json);
+    }
+
+    public function lastUrlStream($nickname, $platform)
+    {
+        $result = DB::table('api_log')
+            ->where('nickname', $nickname)
+            ->where('platform', $platform)
+            ->orderByDesc('id')
+            ->first();
+        return $result->stream;
     }
 }

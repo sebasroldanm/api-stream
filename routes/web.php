@@ -22,4 +22,5 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');
+    $router->get('consult/last/{nickname}/{platform}', 'StreamServerController@lastUrlStream');
 });
