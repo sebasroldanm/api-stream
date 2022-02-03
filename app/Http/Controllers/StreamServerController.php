@@ -90,4 +90,15 @@ class StreamServerController extends Controller
         $result = DB::table('api_log')->get();
         return view('list', compact('result'));
     }
+
+    public function clearData()
+    {
+        $modsRepeat = DB::table('api_log')->select('nickname')->groupBy('nickname')->havingRaw('COUNT(*)>1')->get();
+        foreach ($modsRepeat as $key => $mod) {
+            $del = DB::table('api_log')->where('nickname', $mod->nickname)->orderByDesc('id')->skip(1)->take(20)->get();
+            foreach ($del as $destroy) {
+                DB::table('api_log')->where('id', $destroy->id)->delete();
+            }
+        }
+    }
 }

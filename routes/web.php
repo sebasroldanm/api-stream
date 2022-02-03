@@ -21,6 +21,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/list', 'StreamServerController@list');
+$router->get('/clear', 'StreamServerController@clearData');
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');
