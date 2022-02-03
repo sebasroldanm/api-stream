@@ -84,4 +84,10 @@ class StreamServerController extends Controller
             ->first();
         return $result->stream;
     }
+
+    public function list()
+    {
+        $result = DB::table('api_log')->get();
+        return view('list', compact('result'));
+    }
 }
