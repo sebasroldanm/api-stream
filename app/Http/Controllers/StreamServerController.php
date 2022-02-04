@@ -87,7 +87,7 @@ class StreamServerController extends Controller
 
     public function list()
     {
-        $result = DB::table('api_log')->get();
+        $result = DB::table('api_log')->orderByDesc('updated_at')->get();
         return view('list', compact('result'));
     }
 
