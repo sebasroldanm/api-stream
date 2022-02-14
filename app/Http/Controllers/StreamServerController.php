@@ -29,16 +29,19 @@ class StreamServerController extends Controller
                     $response = $client->get($url);
                     $json = json_decode($response->getBody()->getContents());
                     if (empty($json->cam)) {
+                        DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                         return response()->json();
                     }
                     $data_hls = collect($json->cam->viewServers);
                     $hls = $data_hls->sortKeys()['flashphoner-hls'];
                     $streamName = $json->cam->streamName;
                     if (empty($streamName)) {
+                        DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                         return response()->json();
                     }
                     $url_stream = 'https://b-'.$hls.'.strpst.com/hls/'.$streamName.'/'.$streamName.'.m3u8';
                 } catch (\Throwable $th) {
+                    DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                     return response()->json();
                 }
                 break;
@@ -50,25 +53,29 @@ class StreamServerController extends Controller
                     $response = $client->get($url);
                     $json = json_decode($response->getBody()->getContents());
                     if (!isset($json->hls_source) || empty($json->hls_source)) {
+                        DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                         return response()->json();
                     }
                     $url_stream = $json->hls_source;
                 } catch (\Throwable $th) {
+                    DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                     return response()->json();
                 }
                 break;
             default:
+                DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                 return response()->json();
                 break;
         }
         DB::table('api_log')->updateOrInsert([
             'nickname'  => $nickname,
-            'platform' => $platform,
+            'platform'  => $platform,
             'stream'    => $url_stream
         ],[
             'nickname'  => $nickname,
-            'platform' => $platform,
+            'platform'  => $platform,
             'stream'    => $url_stream,
+            'online'    => true,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
