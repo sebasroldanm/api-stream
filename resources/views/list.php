@@ -34,7 +34,7 @@
                             <td><?php echo $info->nickname ?></td>
                             <td><?php echo $info->platform ?></td>
                             <td><?php echo $info->stream ?></td>
-                            <td><?php echo ($info->online) ? '<span class="badge badge-pill badge-success">Online</span>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
+                            <td><?php echo ($info->online) ? '<a href="'.url('/').'/view/'.$info->nickname.'"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
                             <td><?php echo $info->updated_at ?></td>
                         </tr>
                     <?php

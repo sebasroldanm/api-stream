@@ -109,4 +109,10 @@ class StreamServerController extends Controller
             }
         }
     }
+
+    public function viewMod($nickname)
+    {
+        $mod = DB::table('api_log')->where('nickname', $nickname)->first();
+        return view('view_mod', compact('mod'));
+    }
 }
