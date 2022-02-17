@@ -16,7 +16,7 @@
     <div id="instructions">
 
         <video id="my_video_1"
-            class="video-js vjs-default-skin vjs-fluid"
+            class="video-js vjs-default-skin"
             width="740px" height="420px"
             controls preload="none"
             data-setup='{}'>
@@ -37,7 +37,9 @@
 
         <style>
             #instructions {
-                margin: 0 10%;
+                margin: auto 10%;
+                display: flex;
+                justify-content: center;
             }
 
             .video-js .vjs-control-bar {
