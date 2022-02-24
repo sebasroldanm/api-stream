@@ -23,7 +23,7 @@ $router->get('/', function () use ($router) {
 $router->get('/list', 'StreamServerController@list');
 $router->get('/clear', 'StreamServerController@clearData');
 $router->get('/view/{nickname}', 'StreamServerController@viewMod');
-$router->get('/syncpublic', 'StreamServerController@publicMod');
+$router->get('/sincronizar', 'StreamServerController@publicModUpdate');
 $router->get('/listado', 'StreamServerController@viewListPublicMod');
 $router->get('/ver/{id}', 'StreamServerController@viewPublicMod');
 
