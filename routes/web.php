@@ -23,6 +23,9 @@ $router->get('/', function () use ($router) {
 $router->get('/list', 'StreamServerController@list');
 $router->get('/clear', 'StreamServerController@clearData');
 $router->get('/view/{nickname}', 'StreamServerController@viewMod');
+$router->get('/syncpublic', 'StreamServerController@publicMod');
+$router->get('/listado', 'StreamServerController@viewListPublicMod');
+$router->get('/ver/{id}', 'StreamServerController@viewPublicMod');
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');

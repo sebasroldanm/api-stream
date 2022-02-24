@@ -22,7 +22,7 @@ class StreamServerController extends Controller
     {
         switch ($platform) {
             case 'str':
-                $url = 'https://stripchat.com/api/front/v2/models/username/'.$nickname.'/cam';
+                $url = 'https://stripchat.com/api/front/v2/models/username/' . $nickname . '/cam';
                 $platform = 'STR';
                 try {
                     $client = new \GuzzleHttp\Client();
@@ -39,14 +39,14 @@ class StreamServerController extends Controller
                         DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                         return response()->json();
                     }
-                    $url_stream = 'https://b-'.$hls.'.strpst.com/hls/'.$streamName.'/'.$streamName.'.m3u8';
+                    $url_stream = 'https://b-' . $hls . '.strpst.com/hls/' . $streamName . '/' . $streamName . '.m3u8';
                 } catch (\Throwable $th) {
                     DB::table('api_log')->where('nickname', $nickname)->where('platform', $platform)->update(['online' => false]);
                     return response()->json();
                 }
                 break;
             case 'cht':
-                $url = 'https://chaturbate.com/api/chatvideocontext/'.$nickname;
+                $url = 'https://chaturbate.com/api/chatvideocontext/' . $nickname;
                 $platform = 'CHT';
                 try {
                     $client = new \GuzzleHttp\Client();
@@ -71,7 +71,7 @@ class StreamServerController extends Controller
             'nickname'  => $nickname,
             'platform'  => $platform,
             'stream'    => $url_stream
-        ],[
+        ], [
             'nickname'  => $nickname,
             'platform'  => $platform,
             'stream'    => $url_stream,
@@ -114,5 +114,73 @@ class StreamServerController extends Controller
     {
         $mod = DB::table('api_log')->where('nickname', $nickname)->first();
         return view('view_mod', compact('mod'));
+    }
+
+    public function publicModUpdate()
+    {
+        $mods = DB::table('list_mods')->get();
+
+        foreach ($mods as $key => $mod) {
+            switch ($mod->platform) {
+                case 'str':
+                    $url = 'https://stripchat.com/api/front/v2/models/username/' . $mod->nickname . '/cam';
+                    try {
+                        $client = new \GuzzleHttp\Client();
+                        $response = $client->get($url);
+                        $json = json_decode($response->getBody()->getContents());
+                        $data_save = [];
+                        if (empty($json->cam)) {
+                            $data_save = ['state' => false];
+                        } else {
+                            $streamName = $json->cam->streamName;
+                            if (empty($streamName)) {
+                                $data_save = ['state' => false];
+                            } else {
+                                $data_hls = collect($json->cam->viewServers);
+                                $hls = $data_hls->sortKeys()['flashphoner-hls'];
+                                $url_stream = 'https://b-' . $hls . '.strpst.com/hls/' . $streamName . '/' . $streamName . '.m3u8';
+                                //datauser
+                                $data_save = [
+                                    'user_id' => $json->user->user->id,
+                                    'description' => $json->user->user->description,
+                                    'state' => true,
+                                    'stream' => $url_stream,
+                                    'isMobile' => $json->user->user->isMobile,
+                                    'broadcastGender' => $json->user->user->broadcastGender,
+                                    'previewUrl' => $json->user->user->previewUrl,
+                                    'previewUrlThumbBig' => $json->user->user->previewUrlThumbBig,
+                                    'previewUrlThumbSmall' => $json->user->user->previewUrlThumbSmall,
+                                    'avatarUrl' => $json->user->user->avatarUrl,
+                                    'avatarUrlThumb' => $json->user->user->avatarUrlThumb,
+                                    'offlineStatusUpdatedAt' => Carbon::parse($json->user->user->offlineStatusUpdatedAt),
+                                    'updated_at' => Carbon::now(),
+                                ];
+                            }
+                        }
+                        DB::table('list_mods')->where('nickname', $mod->nickname)->update($data_save);
+                    } catch (\Throwable $th) {
+                        dd($th);
+                    }
+                    break;
+                case 'cht':
+                    $url = 'https://chaturbate.com/api/chatvideocontext/' . $mod->nickname;
+
+                    break;
+            }
+        }
+
+        return response()->json('Ok');
+    }
+
+    public function viewListPublicMod()
+    {
+        $result = DB::table('list_mods')->get();
+        return view('list_public', compact('result'));
+    }
+
+    public function viewPublicMod($id)
+    {
+        $mod = DB::table('list_mods')->where('user_id', $id)->first();
+        return view('view_public', compact('mod'));
     }
 }
