@@ -23,7 +23,7 @@
                         <th>Descripción</th>
                         <th>Ultima Conexión</th>
                         <th>Identificador</th>
-                        <th>Online</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>

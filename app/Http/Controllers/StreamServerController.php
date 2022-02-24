@@ -168,12 +168,11 @@ class StreamServerController extends Controller
                     break;
             }
         }
-
-        return response()->json('Ok');
     }
 
     public function viewListPublicMod()
     {
+        $this->publicModUpdate();
         $result = DB::table('list_mods')->get();
         return view('list_public', compact('result'));
     }
