@@ -220,7 +220,8 @@ class StreamServerController extends Controller
         $response = $client->get($url);
         $json = json_decode($response->getBody()->getContents());
         $model_find = [];
-        $no_save = 0;
+        $create = 0;
+        $update = 0;
 
         foreach ($json->models as $key => $mod) {
             // $url_description = 'https://es.stripchat.com/api/front/v2/models/username/'.$mod->username.'/cam';
@@ -276,8 +277,57 @@ class StreamServerController extends Controller
                         'isTagVerified' => $mod->isTagVerified
                     ]
                 );
+                $create ++;
             } catch (\Throwable $th) {
-                $no_save ++;
+                $affected = DB::table('mods')
+                    ->where('id_mod', $mod->id)
+                    ->update(
+                    [
+                        'snapshotUrl' => $mod->snapshotUrl,
+                        'widgetPreviewUrl' => $mod->widgetPreviewUrl,
+                        'privateRate' => $mod->privateRate,
+                        'p2pRate' => $mod->p2pRate,
+                        'isNonNude' => $mod->isNonNude,
+                        'avatarUrl' => $mod->avatarUrl,
+                        'isPornStar' => $mod->isPornStar,
+                        'id_mod' => $mod->id,
+                        'country' => $mod->country,
+                        'doSpy' => $mod->doSpy,
+                        'doPrivate' => $mod->doPrivate,
+                        'gender' => $mod->gender,
+                        'isHd' => $mod->isHd,
+                        'isVr' => $mod->isVr,
+                        'is2d' => $mod->is2d,
+                        'isExternalApp' => $mod->isExternalApp,
+                        'isMobile' => $mod->isMobile,
+                        'isModel' => $mod->isModel,
+                        'isNew' => $mod->isNew,
+                        'isLive' => $mod->isLive,
+                        'isOnline' => $mod->isOnline,
+                        'previewUrl' => $mod->previewUrl,
+                        'previewUrlThumbBig' => $mod->previewUrlThumbBig,
+                        'previewUrlThumbSmall' => $mod->previewUrlThumbSmall,
+                        'broadcastServer' => $mod->broadcastServer,
+                        'broadcastGender' => $mod->broadcastGender,
+                        'snapshotServer' => $mod->snapshotServer,
+                        'status' => $mod->status,
+                        'topBestPlace' => $mod->topBestPlace,
+                        'username' => $mod->username,
+                        'statusChangedAt' => $mod->statusChangedAt,
+                        'spyRate' => $mod->spyRate,
+                        'publicRecordingsRate' => $mod->publicRecordingsRate,
+                        'genderGroup' => $mod->genderGroup,
+                        'popularSnapshotTimestamp' => $mod->popularSnapshotTimestamp,
+                        'hasGroupShowAnnouncement' => $mod->hasGroupShowAnnouncement,
+                        'groupShowType' => $mod->groupShowType,
+                        'hallOfFamePosition' => $mod->hallOfFamePosition,
+                        'snapshotTimestamp' => $mod->snapshotTimestamp,
+                        'hlsPlaylist' => $mod->hlsPlaylist,
+                        'isAvatarApproved' => $mod->isAvatarApproved,
+                        'isTagVerified' => $mod->isTagVerified
+                    ]
+                );
+                $update ++;
             }
 
             // DB::table('descriptions')->insert(
@@ -425,7 +475,7 @@ class StreamServerController extends Controller
             // }
         }
 
-        return response()->json($no_save);
+        return response()->json(['Guardados: ' => $create, 'Actualizados: ' => $update]);
     }
 
     public function listMods()
