@@ -99,6 +99,11 @@ class StreamServerController extends Controller
         return view('list', compact('result'));
     }
 
+    public function addMod($nickname, $platform)
+    {
+        DB::table('api_log')->insert(['nickname' => $nickname, 'platform' => $platform]);
+    }
+
     public function clearData()
     {
         $modsRepeat = DB::table('api_log')->select('nickname')->groupBy('nickname')->havingRaw('COUNT(*)>1')->get();

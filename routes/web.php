@@ -28,6 +28,7 @@ $router->get('/listado', 'StreamServerController@viewListPublicMod');
 $router->get('/ver/{id}', 'StreamServerController@viewPublicMod');
 $router->get('/search/{limit_request}', 'StreamServerController@searchMod');
 $router->get('/listMods', 'StreamServerController@listMods');
+$router->get('/add/{nickname}/{platform}', 'StreamServerController@addMod');
 
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');
