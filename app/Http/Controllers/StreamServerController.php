@@ -483,9 +483,24 @@ class StreamServerController extends Controller
         return response()->json(['Guardados: ' => $create, 'Actualizados: ' => $update]);
     }
 
-    public function listMods()
+    public function listMods(Request $request)
     {
-        $result = DB::table('mods')->limit(1000)->get();
-        return view('mods', compact('result'));
+        $skip = 0;
+        $take = 15;
+        $per_page = ($request->per_page) ? $request->per_page : 20;
+        $count = DB::table('mods')->count();
+        $limit = intdiv($count, $per_page);
+        $prev = ($request->page == 0 || empty($request->page)) ? false : $request->page - 1;
+        $next = ($request->page == $limit) ? false : $request->page + 1;
+        $next = ($next == 1) ? 2 : $next;
+        if ($request->page) {
+            $take = $per_page * $request->page;
+            $skip = $take - $per_page;
+        }
+        $result = DB::table('mods')->skip($skip)->take($take)->get();
+        $url_next = ($next) ? $request->url() . '?page=' . $next : false;
+        $url_prev = ($prev) ? $request->url() . '?page=' . $prev : false;
+
+        return view('mods', compact('result', 'skip', 'take', 'per_page', 'url_next', 'url_prev'));
     }
 }

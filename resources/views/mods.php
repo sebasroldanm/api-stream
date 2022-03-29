@@ -20,6 +20,14 @@
 
     <div class="container">
         <h2>List Mods</h2>
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="<?php echo $url_prev ?>">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="<?php echo $url_next ?>">Next</a></li>
+        </ul>
+        </nav>
+        <p>Viendo <?php echo $per_page ?> elementos del <?php echo $skip ?> al <?php echo $take ?></p>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -28,6 +36,7 @@
                         <th>Avatar</th>
                         <th>Preview</th>
                         <th>widget</th>
+                        <th>Ver</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +53,9 @@
                             </td>
                             <td>
                                 <img src="<?php echo $info->widgetPreviewUrl ?>" alt="Model" class="img-thumbnail">
+                            </td>
+                            <td>
+                                <?php echo ($info->isOnline) ? '<a href="'.url('/').'/ver/'.$info->id_mod.'"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?>
                             </td>
                         </tr>
                     <?php
