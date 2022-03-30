@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('mod_id');//{#177 ▶}
+            $table->unsignedBigInteger('mod_id')->unique();//{#177 ▶}
             $table->foreign('mod_id')->references('id')->on('mods');
             $table->string('id_mod')->nullable();// 47565663
             $table->boolean('isDeleted')->nullable();// false
