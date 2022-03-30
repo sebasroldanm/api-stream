@@ -360,7 +360,8 @@ class StreamServerController extends Controller
             $take = $per_page * $request->page;
             $skip = $take - $per_page;
         }
-        $result = DB::table('mods')->skip($skip)->take($take)->orderByDesc('isOnline')->get();
+
+        $result = DB::table('mods')->skip($skip)->take($per_page)->orderByDesc('isOnline')->get();
         $url_next = ($next) ? $request->url() . '?page=' . $next : false;
         $url_prev = ($prev) ? $request->url() . '?page=' . $prev : false;
 
