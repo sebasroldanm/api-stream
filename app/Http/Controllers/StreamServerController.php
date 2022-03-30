@@ -351,7 +351,7 @@ class StreamServerController extends Controller
         $skip = 0;
         $take = 15;
         $per_page = ($request->per_page) ? $request->per_page : 20;
-        $count = DB::table('mods')->where('isOnline', true)->count();
+        $count = DB::table('mods')->count();
         $limit = intdiv($count, $per_page);
         $prev = ($request->page == 0 || empty($request->page)) ? false : $request->page - 1;
         $next = ($request->page == $limit) ? false : $request->page + 1;
@@ -365,7 +365,7 @@ class StreamServerController extends Controller
         $url_next = ($next) ? $request->url() . '?page=' . $next : false;
         $url_prev = ($prev) ? $request->url() . '?page=' . $prev : false;
 
-        return view('mods', compact('result', 'skip', 'take', 'per_page', 'url_next', 'url_prev'));
+        return view('mods', compact('result', 'skip', 'take', 'per_page', 'url_next', 'url_prev', 'count'));
     }
 
     public function showMod($id)

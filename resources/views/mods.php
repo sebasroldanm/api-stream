@@ -26,7 +26,7 @@
                 <li class="page-item"><a class="page-link" href="<?php echo $url_next ?>">Next</a></li>
             </ul>
         </nav>
-        <p>Viendo <?php echo $per_page ?> elementos del <?php echo $skip ?> al <?php echo $take ?></p>
+        <p>Viendo <?php echo $per_page ?> elementos del <?php echo $skip ?> al <?php echo $take ?> de un total de <?php echo $count ?></p>
 
         <div class="table-responsive">
             <table class="table table-striped table-hover">

@@ -18,16 +18,11 @@
         <video id="my_video_1" class="video-js vjs-default-skin" width="740px" height="420px" controls preload="none" data-setup='{}'>
         </video>
         <h2>Descriptions:</h2>
-        <hr />
-
-        <h2><?php echo $description->user->user->name ?></h2>
-
-        <h2>Descriptions Detail</h2>
-        <h3>Offile</h3>
+        <p><?php echo $description->user->user->username ?></p>
+        <h3>Offline</h3>
         <p><?php echo $description->user->user->offlineStatus ?></p>
-
         <h3>Image</h3>
-        <img src="<?php echo $description->user->user->previewUrl ?>" style="width: 300px; height: auto;" alt="<?php echo $description->user->user->name ?>">
+        <img src="<?php echo $description->user->user->previewUrl ?>" style="width: 300px; height: auto;" alt="<?php echo $description->user->user->username ?>">
 
     </div>
 
