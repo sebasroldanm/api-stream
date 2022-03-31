@@ -18,10 +18,10 @@ class StreamServerController extends Controller
         //
     }
 
-    public function web($url)
+    public function web(Request $request)
     {
         $client = new \GuzzleHttp\Client();
-        $response = $client->get($url);
+        $response = $client->get($request->s);
         $json = json_decode($response->getBody()->getContents());
         return response()->json(['json' => $json]);
     }
