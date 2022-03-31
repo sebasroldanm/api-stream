@@ -31,6 +31,8 @@ $router->get('/listMods', 'StreamServerController@listMods');
 $router->get('/add/{nickname}/{platform}', 'StreamServerController@addMod');
 $router->get('/show/{id}', 'StreamServerController@showMod');
 
+$router->get('/web/{url}', 'StreamServerController@web');
+
 $router->group(['prefix' => 'v1'], function () use ($router) {
     $router->get('consult/{nickname}/{platform}', 'StreamServerController@consultData');
     $router->get('consult/last/{nickname}/{platform}', 'StreamServerController@lastUrlStream');

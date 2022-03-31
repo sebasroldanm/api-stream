@@ -18,6 +18,14 @@ class StreamServerController extends Controller
         //
     }
 
+    public function web($url)
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($url);
+        $json = json_decode($response->getBody()->getContents());
+        return response()->json(['json' => $json]);
+    }
+
     public function consultData($nickname, $platform)
     {
         switch ($platform) {
