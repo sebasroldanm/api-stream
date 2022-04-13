@@ -21,7 +21,7 @@
                     <tr>
                         <th>Avatar</th>
                         <th>Descripción</th>
-                        <th>Ultima Conexión</th>
+                        <th class="desktop">Ultima Conexión</th>
                         <th>Identificador</th>
                         <th>Estado</th>
                     </tr>
@@ -35,9 +35,9 @@
                                 <img src="<?php echo $info->avatarUrl ?>" alt="Model" class="img-thumbnail">
                             </td>
                             <td><?php echo $info->description ?></td>
-                            <td><?php echo $info->offlineStatusUpdatedAt ?></td>
+                            <td class="desktop"><?php echo $info->offlineStatusUpdatedAt ?></td>
                             <td><?php echo $info->user_id ?></td>
-                            <td><?php echo ($info->state) ? '<a href="'.url('/').'/ver/'.$info->user_id.'"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
+                            <td><?php echo ($info->state) ? '<a href="' . url('/') . '/ver/' . $info->user_id . '"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
                         </tr>
                     <?php
                     }
@@ -46,6 +46,13 @@
             </table>
         </div>
     </div>
+    <style>
+        @media (max-width: 600px) {
+            .desktop {
+                display: none;
+            }
+        }
+    </style>
 
 </body>
 

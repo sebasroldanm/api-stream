@@ -21,7 +21,7 @@
                     <tr>
                         <th>Nickname</th>
                         <th>Platform</th>
-                        <th>Last Stream</th>
+                        <th class="desktop">Last Stream</th>
                         <th>Online</th>
                         <th>Update at</th>
                     </tr>
@@ -33,8 +33,8 @@
                         <tr>
                             <td><?php echo $info->nickname ?></td>
                             <td><?php echo $info->platform ?></td>
-                            <td><?php echo $info->stream ?></td>
-                            <td><?php echo ($info->online) ? '<a href="'.url('/').'/view/'.$info->nickname.'"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
+                            <td class="desktop"><?php echo $info->stream ?></td>
+                            <td><?php echo ($info->online) ? '<a href="' . url('/') . '/view/' . $info->nickname . '"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?></td>
                             <td><?php echo $info->updated_at ?></td>
                         </tr>
                     <?php
@@ -44,7 +44,13 @@
             </table>
         </div>
     </div>
-
+    <style>
+        @media (max-width: 600px) {
+            .desktop {
+                display: none;
+            }
+        }
+    </style>
 </body>
 
 </html>
