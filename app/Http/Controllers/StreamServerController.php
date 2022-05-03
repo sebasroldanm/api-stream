@@ -390,6 +390,24 @@ class StreamServerController extends Controller
         return view('view_mod_full', compact('mod', 'description', 'url_stream'));
     }
 
+    public function cleanMods()
+    {
+        $delete = 0;
+        $salve = 0;
+        $mods = DB::table('mods')->get();
+        foreach ($mods as $key => $mod) {
+            $description = DB::table('descriptions')->where('mod_id', $mod->id_mod)->first();
+            $user = DB::table('users')->where('mod_id', $mod->id_mod)->first();
+            if (!$description && !$user) {
+                DB::table('mods')->where('id_mod', $mod->id_mod)->delete();
+                $delete ++;
+            } else {
+                $salve++;
+            }
+        }
+        return response()->json(['Eliminados: ' => $delete, 'Salvados: ' => $salve]);
+    }
+
     private function updateDataMod($mod) {
         $id_mod = $mod->id;
         $url_description = 'https://es.stripchat.com/api/front/v2/models/username/'.$mod->username.'/cam';

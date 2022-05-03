@@ -30,6 +30,7 @@ $router->get('/search/{limit_request}', 'StreamServerController@searchMod');
 $router->get('/listMods', 'StreamServerController@listMods');
 $router->get('/add/{nickname}/{platform}', 'StreamServerController@addMod');
 $router->get('/show/{username}', 'StreamServerController@showMod');
+$router->get('/cleanMods', 'StreamServerController@cleanMods');
 
 $router->get('/web', 'StreamServerController@web');
 
