@@ -399,8 +399,12 @@ class StreamServerController extends Controller
             $description = DB::table('descriptions')->where('mod_id', $mod->id_mod)->first();
             $user = DB::table('users')->where('mod_id', $mod->id_mod)->first();
             if (!$description && !$user) {
-                DB::table('mods')->where('id_mod', $mod->id_mod)->delete();
-                $delete ++;
+                try {
+                    DB::table('mods')->where('id_mod', $mod->id_mod)->delete();
+                    $delete ++;
+                } catch (\Throwable $th) {
+                    $salve ++;
+                }
             } else {
                 $salve++;
             }
