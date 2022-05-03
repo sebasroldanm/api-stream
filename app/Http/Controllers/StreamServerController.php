@@ -334,8 +334,8 @@ class StreamServerController extends Controller
                         'hallOfFamePosition' => $mod->hallOfFamePosition,
                         'snapshotTimestamp' => $mod->snapshotTimestamp,
                         'hlsPlaylist' => $mod->hlsPlaylist,
-                        'isAvatarApproved' => $mod->isAvatarApproved,
-                        'isTagVerified' => $mod->isTagVerified,
+                        'isAvatarApproved' => (isset($mod->isAvatarApproved)) ? $mod->isAvatarApproved : false,
+                        'isTagVerified' => (isset($mod->isTagVerified)) ? $mod->isTagVerified : false,
                         'updated_at' => $date_now,
                     ]
                 );
