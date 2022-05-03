@@ -300,7 +300,7 @@ class StreamServerController extends Controller
                         'p2pRate' => $mod->p2pRate,
                         'isNonNude' => $mod->isNonNude,
                         'avatarUrl' => $mod->avatarUrl,
-                        'isPornStar' => $mod->isPornStar,
+                        // 'isPornStar' => $mod->isPornStar,
                         'id_mod' => $mod->id,
                         'country' => $mod->country,
                         'doSpy' => $mod->doSpy,
