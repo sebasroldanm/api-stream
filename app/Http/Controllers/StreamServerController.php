@@ -376,9 +376,9 @@ class StreamServerController extends Controller
         return view('mods', compact('result', 'skip', 'take', 'per_page', 'url_next', 'url_prev', 'count'));
     }
 
-    public function showMod($id)
+    public function showMod($username)
     {
-        $mod = DB::table('mods')->where('id_mod', $id)->first();
+        $mod = DB::table('mods')->where('username', $username)->first();
         $description = $this->updateDataMod($mod);
 
         $data_hls = collect($description->cam->viewServers);

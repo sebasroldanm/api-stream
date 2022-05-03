@@ -29,7 +29,7 @@ $router->get('/ver/{id}', 'StreamServerController@viewPublicMod');
 $router->get('/search/{limit_request}', 'StreamServerController@searchMod');
 $router->get('/listMods', 'StreamServerController@listMods');
 $router->get('/add/{nickname}/{platform}', 'StreamServerController@addMod');
-$router->get('/show/{id}', 'StreamServerController@showMod');
+$router->get('/show/{username}', 'StreamServerController@showMod');
 
 $router->get('/web', 'StreamServerController@web');
 
