@@ -55,7 +55,7 @@
                                 <img src="<?php echo $info->widgetPreviewUrl ?>" alt="Model" class="img-thumbnail">
                             </td>
                             <td>
-                                <?php echo ($info->isOnline) ? '<a href="' . url('/') . '/show/' . $info->id_mod . '"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?>
+                                <?php echo ($info->isOnline) ? '<a href="' . url('/') . '/show/' . $info->username . '"><span class="badge badge-pill badge-success">Online</span></a>' : '<span class="badge badge-pill badge-danger">Offline</span>' ?>
                             </td>
                         </tr>
                     <?php
