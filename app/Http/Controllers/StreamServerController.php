@@ -308,7 +308,7 @@ class StreamServerController extends Controller
                         'gender' => $mod->gender,
                         'isHd' => $mod->isHd,
                         'isVr' => $mod->isVr,
-                        'is2d' => $mod->is2d,
+                        'is2d' => (isset($mod->is2d)) ? $mod->is2d : false,
                         'isExternalApp' => $mod->isExternalApp,
                         'isMobile' => $mod->isMobile,
                         'isModel' => $mod->isModel,
